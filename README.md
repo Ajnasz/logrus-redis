@@ -27,6 +27,6 @@ func main() {
 	logrus.WithFields(logrus.Fields{
 		"foo": "bar",
 		"baz": "qux",
-	})
+	}).Warn("Hopp")
 }
 ```
