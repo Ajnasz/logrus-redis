@@ -31,7 +31,7 @@ func (r *LogrusRedis) Fire(entry *logrus.Entry) error {
 		return err
 	}
 
-	err = r.client.Expire(r.key, time.Duration(1)*time.Hour).Err()
+	err = r.client.Expire(r.key, r.Expire).Err()
 
 	return err
 }
@@ -46,7 +46,7 @@ func NewLogrusRedis(client *redis.Client, key string) *LogrusRedis {
 	return &LogrusRedis{
 		client:    client,
 		key:       key,
-		Expire:    time.Duration(1) * time.Hour,
+		Expire:    time.Hour,
 		formatter: &logrus.TextFormatter{DisableColors: true},
 	}
 }
