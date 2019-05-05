@@ -8,10 +8,11 @@ Saves logrus events into [https://redis.io](Redis) [https://redis.io/topics/data
 ```go
 package main
 
-import(
-	"github.com/Ajnasz/hook-command/logrus_redis"
+import (
+	"github.com/Ajnasz/logrus-redis"
 	"github.com/Sirupsen/logrus"
 	"github.com/go-redis/redis"
+	"log"
 )
 
 var redisClient *redis.Client
@@ -28,5 +29,15 @@ func main() {
 		"foo": "bar",
 		"baz": "qux",
 	}).Warn("Hopp")
+
+	res := redisClient.LRange("redis_logs", 0, 100)
+
+	err := res.Err()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	log.Println(res.Result())
 }
 ```
